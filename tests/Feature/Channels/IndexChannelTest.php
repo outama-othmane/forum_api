@@ -21,15 +21,15 @@ class IndexChannelTest extends TestCase
             ]);
         });
     }
-
-    public function test_it_paginated_data()
-    {
-    	$channels = factory(Channel::class, 5)->create();
-    	$this->json('get', '/api/channels')
-    	->assertJsonStructure([
-            'data',
-            'meta',
-            'links'
-        ]);
-    }
+    // Ignore this cuz i fetch all the channels now :)
+    // public function test_it_paginated_data()
+    // {
+    // 	$channels = factory(Channel::class, 5)->create();
+    // 	$this->json('get', '/api/channels')
+    // 	->assertJsonStructure([
+    //         'data',
+    //         'meta',
+    //         'links'
+    //     ]);
+    // }
 }

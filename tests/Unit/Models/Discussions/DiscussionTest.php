@@ -52,4 +52,24 @@ class DiscussionTest extends TestCase
         
         $this->assertEquals('slug', $discussion->getRouteKeyName());
     }
+
+    public function test_if_the_current_user_can_delete_the_discussion()
+    {
+        $user = $this->generateUser();
+        $this->actingAs($user);
+
+        $discussion = factory(Discussion::class)->create(['started_user_id' => $user->id]);
+
+        $this->assertTrue($discussion->canDelete());
+    }
+
+    public function test_if_the_current_user_can_edit_the_discussion()
+    {
+        $user = $this->generateUser();
+        $this->actingAs($user);
+
+        $discussion = factory(Discussion::class)->create(['started_user_id' => $user->id]);
+
+        $this->assertTrue($discussion->canEdit());
+    }
 }

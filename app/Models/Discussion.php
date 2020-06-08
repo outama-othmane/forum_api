@@ -77,10 +77,10 @@ class Discussion extends Model
         ]);
     }
 
-    // public function author()
-    // {
-    //     return $this->belongsTo(User::class, 'started_user_id');
-    // }
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'started_user_id');
+    }
 
     // public function isAuthor()
     // {
@@ -90,4 +90,21 @@ class Discussion extends Model
 
     //     return $this->author->id === Auth::user()->id;
     // }
+
+    public function canDelete()
+    {
+        if (!Auth::check()) {
+            return false;
+        }
+        return $this->started_user_id === Auth::user()->id;
+    }
+
+    public function canEdit()
+    {
+        if (!Auth::check()) {
+            return false;
+        }
+
+        return $this->started_user_id === Auth::user()->id;
+    }
 }

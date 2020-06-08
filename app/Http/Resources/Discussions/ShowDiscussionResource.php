@@ -19,8 +19,7 @@ class ShowDiscussionResource extends JsonResource
             'id'            => $this->id,
             'title'         => $this->title,
             'slug'          => $this->slug,
-            'posts_count'   => $this->posts_count-1,
-            'votes_count'   => "soon",
+            'posts_count'   => ($this->posts_count <= 0) ? 0 : $this->posts_count-1,
             'created_at'        => $this->created_at,
             'created_at_humans' => $this->created_at->diffForHumans(),
             'isClosed'      => $this->isClosed,
@@ -28,9 +27,10 @@ class ShowDiscussionResource extends JsonResource
             'channels'      => $this->merge(
                 $this->whenLoaded('channel', new ChannelResource($this->channel))
             ),
-            // 'user'          => [
-            //     'isAuthor' => $this->isAuthor(),
-            // ]
+            'user'          => [
+                'canDelete' => $this->canDelete(),
+                'canEdit'  => $this->canEdit(),
+            ]
         ];
     }
 }
