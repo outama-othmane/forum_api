@@ -25,7 +25,7 @@ class UpdateDiscussionRequest extends FormRequest
     {
         return [
             'title'         => 'required|string|max:255',
-            'close'         => 'nullable|integer',
+            // 'close'         => 'nullable|integer',
         ];
     }
 }

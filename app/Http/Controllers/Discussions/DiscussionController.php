@@ -3,23 +3,15 @@
 namespace App\Http\Controllers\Discussions;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Discussions\StoreDiscussionRequest;
-use App\Http\Requests\Discussions\UpdateDiscussionRequest;
-use App\Http\Resources\Discussions\DiscussionResource;
-use App\Http\Resources\Discussions\ShowDiscussionResource;
-use App\Models\Channel;
-use App\Models\Discussion;
-use App\Scoping\Scopes\ChannelScope;
-use App\Scoping\Scopes\ClosedScope;
+use App\Http\Requests\Discussions\{StoreDiscussionRequest, UpdateDiscussionRequest};
+use App\Http\Resources\Discussions\{DiscussionResource, ShowDiscussionResource};
+use App\Models\{Channel, Discussion};
+use App\Scoping\Scopes\{ChannelScope, ClosedScope};
 use App\Scoping\Scopes\Discussions\NoPostsYetScope;
-use App\Scoping\Scopes\Discussions\Ordering\ActivityOrder;
-use App\Scoping\Scopes\Discussions\Ordering\ChannelsOrder;
-use App\Scoping\Scopes\Discussions\Ordering\LastPostDateOrder;
+use App\Scoping\Scopes\Discussions\Ordering\{ActivityOrder, ChannelsOrder, LastPostDateOrder};
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Lang;
-use Illuminate\Support\Str;
+use Illuminate\Support\{Carbon, Str};
+use Illuminate\Support\Facades\{Auth,Lang};
 
 class DiscussionController extends Controller
 {
@@ -37,8 +29,7 @@ class DiscussionController extends Controller
         	->latest()
         	->paginate(
                 min($request->get('perPage', 10), 10)
-            );
-
+            );    
         return DiscussionResource::collection($discussions);
     }
 
@@ -80,21 +71,23 @@ class DiscussionController extends Controller
         // Check if the current user can delete the discussion
         $this->authorize('update', $discussion);
 
-        if ($discussion->title == $request->title && intval($request->close) != 1) {
-            return ['d'];
+        if ($discussion->title == $request->title
+         // && intval($request->close) != 1
+        ) {
+            return;
         }
 
-        if ($discussion->title != $request->title) {
+        // if ($discussion->title != $request->title) {
             $discussion->title = $request->title;
             $discussion->slug = $this->generateSlug($request, $discussion->id);
-        }
+        // }
 
-        if (intval($request->close) == 1 && is_null($discussion->closed_at)) {
-            $discussion->closed_at = Carbon::now();
-        }
+        // if (intval($request->close) == 1 && is_null($discussion->closed_at)) {
+        //     $discussion->closed_at = Carbon::now();
+        // }
         
         $discussion->save();
-        return ['dd'];
+        return (new ShowDiscussionResource($discussion));
     }
 
     public function destroy(Discussion $discussion, Request $request)

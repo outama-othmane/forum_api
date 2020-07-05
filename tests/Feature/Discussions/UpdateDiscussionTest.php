@@ -32,14 +32,14 @@ class UpdateDiscussionTest extends TestCase
             ->assertJsonValidationErrors(['title']);
     }
 
-    public function test_it_requires_a_valid_close()
-    {
-         $user = $this->generateUser();
+    // public function test_it_requires_a_valid_close()
+    // {
+    //      $user = $this->generateUser();
 
-        $discussion = factory(Discussion::class)->create(['started_user_id' => $user->id]);
-        $this->jsonAs($user, 'put', '/api/discussions/' . $discussion->slug, ['close' => 'f'])
-            ->assertJsonValidationErrors(['close']);
-    }
+    //     $discussion = factory(Discussion::class)->create(['started_user_id' => $user->id]);
+    //     $this->jsonAs($user, 'put', '/api/discussions/' . $discussion->slug, ['close' => 'f'])
+    //         ->assertJsonValidationErrors(['close']);
+    // }
 
     public function test_it_fails_if_fails_if_the_user_isnt_the_owner()
     {

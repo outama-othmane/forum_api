@@ -17,6 +17,7 @@ class DiscussionResource extends JsonResource
     public function toArray($request)
     {
         // To stop
+        // I forgot the reason why I added this
         if ($this->lastPost) {
             $this->lastPost->setRelation('discussion', $this);
         }

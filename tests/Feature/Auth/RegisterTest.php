@@ -34,6 +34,25 @@ class RegisterTest extends TestCase
             ->assertJsonValidationErrors(['email']);
     }
 
+    public function test_it_requires_an_username()
+    {
+        $this->json('post', '/api/auth/register')
+            ->assertJsonValidationErrors(['username']);
+    }
+
+    public function test_it_requires_a_valid_username()
+    {
+        $this->json('post', '/api/auth/register', ['username' => 'nope.'])
+            ->assertJsonValidationErrors(['username']);
+    }
+
+    public function test_it_requires_a_unique_username()
+    {
+        $user = factory(User::class)->create();
+        $this->json('post', '/api/auth/register', ['username' => $user->username])
+            ->assertJsonValidationErrors(['username']);
+    }
+
     public function test_it_requires_a_password()
     {
         $this->json('post', '/api/auth/register')
@@ -50,7 +69,7 @@ class RegisterTest extends TestCase
     {
         $this->json('post', '/api/auth/register', [
             'email' => $email = 'emailme@gmail.com', 
-            'password' => $email
+            'password' => $email,
         ])
             ->assertJsonValidationErrors(['password']);
     }
@@ -61,11 +80,13 @@ class RegisterTest extends TestCase
             'email' => $email = 'emailme@gmail.com', 
             'password' => 'myPassword',
             'name' => $name = 'John',
+            'username' => $username = 'john11_',
         ]);
 
         $this->assertDatabaseHas('users', [
             'email' => $email,
             'name' => $name,
+            'username' => $username,
         ]);
     }
 }

@@ -15,3 +15,5 @@ Route::apiResource('discussions/{discussion}/posts', 'Discussions\Posts\Discussi
 Route::apiResource('posts/{post}/votes', 'Posts\Votes\PostVotesController');
 
 Route::apiResource('users', 'Users\UserController');
+Route::apiResource('users/{user}/discussions', 'Users\Discussions\UserDiscussionsController');
+Route::apiResource('users/{user}/posts', 'Users\Posts\UserPostsController');

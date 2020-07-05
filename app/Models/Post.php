@@ -68,7 +68,7 @@ class Post extends Model
     {
         if (!Auth::check()) {
             // We have to improve this :p
-            return $this->hasMany(Vote::class)->whereNull(['user_id', 'post_id'])->whereNotNull(['user_id', 'post_id'])->limit(0);
+            return $this->hasMany(Vote::class)->whereNull(['user_id', 'post_id'])->limit(0);
         }
         return $this->hasMany(Vote::class)->where(['user_id' => Auth::user()->id]);
     } 

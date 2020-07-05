@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Discussion;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Vote;
@@ -20,7 +21,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'username'
     ];
 
     /**
@@ -41,6 +42,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'username';
+    }
 
     public function getAvatarAttribute()
     {
@@ -59,5 +69,10 @@ class User extends Authenticatable
     public function votes()
     {
         return $this->hasMany(Vote::class);
+    }
+
+    public function discussions()
+    {
+        return $this->hasMany(Discussion::class, 'started_user_id');
     }
 }

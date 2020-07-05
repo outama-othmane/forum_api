@@ -16,11 +16,12 @@ class PrivateUserResource extends JsonResource
     {
         return [
             'id'                => $this->id,
-            'name'        => $this->name,
+            'name'              => $this->name,
+            'username'          => $this->username,
             'email'             => $this->email,
             'email_verified'    => (bool)$this->email_verified_at,
             'avatar'            => $this->avatar,
-            'created_at'        => $this->created_at->diffForHumans(),
+            'created_at'    => optional($this->created_at)->diffForHumans(),
         ];
     }
 }

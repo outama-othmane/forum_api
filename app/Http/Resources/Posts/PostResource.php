@@ -21,16 +21,16 @@ class PostResource extends JsonResource
             'content_markdown'  => $this->content_markdown,
             'created_at'        => $this->created_at,
             'created_at_humans' => $this->created_at->diffForHumans(),
-            'isParent'      => $this->isParent,
-            'parent_id'     => $this->parent_id,
-            'votes_count'   => $this->votes_count,
-            'author'          => $this->merge(
+            'isParent'          => $this->isParent,
+            'parent_id'         => $this->parent_id,
+            'votes_count'       => $this->votes_count,
+            'author'            => $this->merge(
                 $this->whenLoaded('user', new UserResource($this->user))
             ),
             'user'          => [
-                'isLiked'  => $this->isLiked(),
-                'canEdit'  => $this->canEdit(),
-                'canDelete'  => $this->canDelete(),
+                'isLiked'   => $this->isLiked(),
+                'canEdit'   => $this->canEdit(),
+                'canDelete' => $this->canDelete(),
             ],
         ];
     }
