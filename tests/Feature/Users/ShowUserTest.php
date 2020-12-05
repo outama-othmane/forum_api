@@ -21,8 +21,8 @@ class ShowUserTest extends TestCase
     public function text_it_shows_user_information()
     {
         $user = $this->generateUser();
-        factory(Post::class, 10)->create(['user_id'=>$user->id]);
-        factory(Discussion::class, 5)->create(['started_user_id'=>$user->id]);
+        Post::factory(10)->create(['user_id'=>$user->id]);
+        Discussion::factory(5)->create(['started_user_id'=>$user->id]);
         
         $this->jsonAs($this->generateUser(), 'get', '/api/users/' . $user->username)
             ->assertJsonFragment([

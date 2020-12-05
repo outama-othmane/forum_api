@@ -27,7 +27,7 @@ class UpdateDiscussionTest extends TestCase
     {
          $user = $this->generateUser();
 
-        $discussion = factory(Discussion::class)->create(['started_user_id' => $user->id]);
+        $discussion = Discussion::factory()->create(['started_user_id' => $user->id]);
         $this->jsonAs($user, 'put', '/api/discussions/' . $discussion->slug)
             ->assertJsonValidationErrors(['title']);
     }
@@ -36,7 +36,7 @@ class UpdateDiscussionTest extends TestCase
     // {
     //      $user = $this->generateUser();
 
-    //     $discussion = factory(Discussion::class)->create(['started_user_id' => $user->id]);
+    //     $discussion = Discussion::factory()->create(['started_user_id' => $user->id]);
     //     $this->jsonAs($user, 'put', '/api/discussions/' . $discussion->slug, ['close' => 'f'])
     //         ->assertJsonValidationErrors(['close']);
     // }
@@ -45,7 +45,7 @@ class UpdateDiscussionTest extends TestCase
     {
         $user = $this->generateUser();
 
-        $discussion = factory(Discussion::class)->create();
+        $discussion = Discussion::factory()->create();
         $this->jsonAs($user, 'put', '/api/discussions/' . $discussion->slug, ['title' => 'HELLO'])
             ->assertForbidden();
     }
@@ -54,7 +54,7 @@ class UpdateDiscussionTest extends TestCase
     {
         $user = $this->generateUser();
 
-        $discussion = factory(Discussion::class)->create(['started_user_id' => $user->id]);
+        $discussion = Discussion::factory()->create(['started_user_id' => $user->id]);
         $this->jsonAs($user, 'put', '/api/discussions/' . $discussion->slug, $data = [
             'title' => 'New name',
             'close' => '1'

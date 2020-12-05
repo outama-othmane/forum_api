@@ -17,7 +17,7 @@ class ShowDiscussionTest extends TestCase
 
     public function test_it_shows_the_discussion()
     {
-        $discussion = factory(Discussion::class)->create();
+        $discussion = Discussion::factory()->create();
 
         $this->json('get', '/api/discussions/' . $discussion->slug)
             ->assertJsonFragment([

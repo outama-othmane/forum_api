@@ -12,23 +12,23 @@ class PostTest extends TestCase
 {
     public function test_it_belongs_to_a_user()
     {
-    	$post = factory(Post::class)->create();
+    	$post = Post::factory()->create();
 
     	$this->assertInstanceOf(User::class, $post->user);
     }
 
     public function test_it_belongs_to_a_discussion()
     {
-    	$post = factory(Post::class)->create();
+    	$post = Post::factory()->create();
 
     	$this->assertInstanceOf(Discussion::class, $post->discussion);
     }
 
     public function test_it_has_many_votes()
     {
-        $post = factory(Post::class)->create();
+        $post = Post::factory()->create();
 
-        $votes = factory(Vote::class, 5)->create([
+        $votes = Vote::factory(5)->create([
             'post_id' => $post->id,
         ]);
 
@@ -37,16 +37,16 @@ class PostTest extends TestCase
 
     public function test_lessVotes_method()
     {
-        $post = factory(Post::class)->create();
+        $post = Post::factory()->create();
 
-        $votes = factory(Vote::class, 5)->create([
+        $votes = Vote::factory(5)->create([
             'post_id' => $post->id,
         ]);
         
         $user = $this->generateUser();
         $this->actingAs($user);
 
-        $votes = factory(Vote::class, 2)->create([
+        $votes = Vote::factory(2)->create([
             'post_id' => $post->id,
             'user_id' => $user->id,
         ]);
@@ -56,8 +56,8 @@ class PostTest extends TestCase
 
     public function test_it_has_many_children()
     {
-        $post = factory(Post::class)->create();
-        $anotherPost = factory(Post::class)->create(['parent_id' => $post->id]);
+        $post = Post::factory()->create();
+        $anotherPost = Post::factory()->create(['parent_id' => $post->id]);
 
         $this->assertEquals(1, $post->children->count());
     }
@@ -67,7 +67,7 @@ class PostTest extends TestCase
         $user = $this->generateUser();
         $this->actingAs($user);
 
-        $post = factory(Post::class)->create(['user_id' => $user->id]);
+        $post = Post::factory()->create(['user_id' => $user->id]);
 
         $this->assertTrue($post->canEdit());
     }
@@ -77,7 +77,7 @@ class PostTest extends TestCase
         $user = $this->generateUser();
         $this->actingAs($user);
 
-        $post = factory(Post::class)->create(['user_id' => $user->id]);
+        $post = Post::factory()->create(['user_id' => $user->id]);
 
         $this->assertTrue($post->canDelete());
     }

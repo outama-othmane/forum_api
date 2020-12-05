@@ -12,7 +12,7 @@ abstract class TestCase extends BaseTestCase
 
     public function generateUser()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
     	return $user;
     }
 

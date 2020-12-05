@@ -12,9 +12,9 @@ class UserTest extends TestCase
 {
     public function test_it_has_many_post()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
-        $posts = factory(Post::class, 5)->create([
+        $posts = Post::factory(5)->create([
             'user_id' => $user->id,
         ]);
 
@@ -23,9 +23,9 @@ class UserTest extends TestCase
 
     public function test_it_has_many_votes()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
-        $votes = factory(Vote::class, 5)->create([
+        $votes = Vote::factory(5)->create([
             'user_id' => $user->id,
         ]);
 
@@ -41,9 +41,9 @@ class UserTest extends TestCase
 
     public function test_it_has_many_discussions()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
-        factory(Discussion::class, 5)->create([
+        Discussion::factory(5)->create([
             'started_user_id' => $user->id,
         ]);
 

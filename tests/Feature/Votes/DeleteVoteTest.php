@@ -25,9 +25,9 @@ class DeleteVoteTest extends TestCase
     public function test_it_deletes_the_vote()
     {
         $user = $this->generateUser();
-        $post = factory(Post::class)->create();
+        $post = Post::factory()->create();
 
-        factory(Vote::class)->create($data = [
+        Vote::factory()->create($data = [
             'user_id' => $user->id,
             'post_id' => $post->id,
         ]);

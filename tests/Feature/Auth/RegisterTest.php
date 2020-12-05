@@ -29,7 +29,7 @@ class RegisterTest extends TestCase
 
     public function test_it_requires_a_unique_email()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
         $this->json('post', '/api/auth/register', ['email' => $user->email])
             ->assertJsonValidationErrors(['email']);
     }
@@ -48,7 +48,7 @@ class RegisterTest extends TestCase
 
     public function test_it_requires_a_unique_username()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
         $this->json('post', '/api/auth/register', ['username' => $user->username])
             ->assertJsonValidationErrors(['username']);
     }

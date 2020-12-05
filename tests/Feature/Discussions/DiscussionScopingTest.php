@@ -15,13 +15,13 @@ class DiscussionScopingTest extends TestCase
 {
     public function test_it_can_scope_by_channel()
     {
-        $channel = factory(Channel::class)->create();
+        $channel = Channel::factory()->create();
 
-        $discussion = factory(Discussion::class)->create([
+        $discussion = Discussion::factory()->create([
             'channel_id' => $channel->id,
         ]);
 
-        $anotherDiscussion = factory(Discussion::class)->create();
+        $anotherDiscussion = Discussion::factory()->create();
 
         $this->json('get', '/api/discussions?channel=' . $channel->slug)
             ->assertJsonCount(1, 'data');
@@ -29,14 +29,14 @@ class DiscussionScopingTest extends TestCase
 
     public function test_it_can_scope_order_by_channel()
     {
-        $channel = factory(Channel::class)->create(['name' => 'Abc']);
-        $channel2 = factory(Channel::class)->create(['name' => 'Zwy']);
+        $channel = Channel::factory()->create(['name' => 'Abc']);
+        $channel2 = Channel::factory()->create(['name' => 'Zwy']);
 
-        $discussion = factory(Discussion::class)->create([
+        $discussion = Discussion::factory()->create([
             'channel_id' => $channel2->id,
         ]);
 
-        $anotherDiscussion = factory(Discussion::class)->create([
+        $anotherDiscussion = Discussion::factory()->create([
             'channel_id' => $channel->id
         ]);
 
@@ -48,21 +48,21 @@ class DiscussionScopingTest extends TestCase
 
     public function test_it_can_scope_order_by_last_post_date()
     {
-        $discussion = factory(Discussion::class)->create();
-        $discussion2 = factory(Discussion::class)->create();
+        $discussion = Discussion::factory()->create();
+        $discussion2 = Discussion::factory()->create();
         
 
-        factory(Post::class)->create([
+        Post::factory()->create([
             'discussion_id' => $discussion->id,
             'created_at' => Carbon::now(),
         ]);
 
-       $post =  factory(Post::class)->create([
+       $post =  Post::factory()->create([
             'discussion_id' => $discussion->id,
             'created_at' => Carbon::now()->addYear(),
         ]);
 
-        factory(Post::class)->create([
+        Post::factory()->create([
             'discussion_id' => $discussion2->id,
             'created_at' => Carbon::now(),
         ]);
@@ -77,14 +77,14 @@ class DiscussionScopingTest extends TestCase
 
     public function test_it_can_scope_order_by_activity()
     {
-        $discussion = factory(Discussion::class)->create();
-        $discussion2 = factory(Discussion::class)->create();
+        $discussion = Discussion::factory()->create();
+        $discussion2 = Discussion::factory()->create();
 
-        factory(Post::class, 5)->create([
+        Post::factory(5)->create([
             'discussion_id' => $discussion->id,
         ]);
 
-        factory(Post::class, 2)->create([
+        Post::factory(2)->create([
             'discussion_id' => $discussion2->id,
         ]);
 
@@ -96,8 +96,8 @@ class DiscussionScopingTest extends TestCase
 
     public function test_it_can_scope_by_closed_at_column_true()
     {
-        $discussion = factory(Discussion::class)->create(['closed_at' => Carbon::now()]);
-        $anotherDiscussion = factory(Discussion::class)->create();
+        $discussion = Discussion::factory()->create(['closed_at' => Carbon::now()]);
+        $anotherDiscussion = Discussion::factory()->create();
         
         $this->json('get', '/api/discussions?closed=true')
             ->assertJsonFragment([
@@ -107,8 +107,8 @@ class DiscussionScopingTest extends TestCase
 
     public function test_it_can_scope_by_closed_at_column_false()
     {
-        $discussion = factory(Discussion::class)->create(['closed_at' => Carbon::now()]);
-        $anotherDiscussion = factory(Discussion::class)->create();
+        $discussion = Discussion::factory()->create(['closed_at' => Carbon::now()]);
+        $anotherDiscussion = Discussion::factory()->create();
         
         $this->json('get', '/api/discussions?closed=false')
             ->assertJsonFragment([
@@ -118,11 +118,11 @@ class DiscussionScopingTest extends TestCase
 
     public function test_it_filters_by_no_posts_yet()
     {
-        $discussion = factory(Discussion::class)->create();
-        $posts = factory(Post::class, 3)->create(['discussion_id' => $discussion->id]); 
+        $discussion = Discussion::factory()->create();
+        $posts = Post::factory(3)->create(['discussion_id' => $discussion->id]); 
 
-        $anotherDiscussion = factory(Discussion::class)->create();
-        $posts = factory(Post::class)->create(['discussion_id' => $anotherDiscussion->id]); 
+        $anotherDiscussion = Discussion::factory()->create();
+        $posts = Post::factory()->create(['discussion_id' => $anotherDiscussion->id]); 
         
         $this->json('get', '/api/discussions?no_posts=true')
             ->assertJsonCount(1, "data");

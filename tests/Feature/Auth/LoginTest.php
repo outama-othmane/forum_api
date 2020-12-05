@@ -23,7 +23,7 @@ class LoginTest extends TestCase
 
     public function test_it_fails_if_the_credentiels_are_incorrect()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
         $this->json('post', '/api/auth/login', [
             'email' => $user->email,
@@ -34,7 +34,7 @@ class LoginTest extends TestCase
 
     public function test_it_returns_a_token()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
         $this->json('post', '/api/auth/login', [
             'email' => $user->email,

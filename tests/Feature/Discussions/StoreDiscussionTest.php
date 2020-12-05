@@ -48,7 +48,7 @@ class StoreDiscussionTest extends TestCase
 
     public function test_it_creates_discussion()
     {
-        $channel = factory(Channel::class)->create();
+        $channel = Channel::factory()->create();
 
         $this->jsonAs($this->generateUser(), 'post', '/api/discussions', [
             'channel_id' => $channel->id,
@@ -66,8 +66,8 @@ class StoreDiscussionTest extends TestCase
     {
         $title = 'My title here !';
 
-        $channel = factory(Channel::class)->create();
-        $discussion = factory(Discussion::class)->create(['title' => $title]);
+        $channel = Channel::factory()->create();
+        $discussion = Discussion::factory()->create(['title' => $title]);
 
         $this->jsonAs($this->generateUser(), 'post', '/api/discussions', [
             'channel_id' => $channel->id,
@@ -80,7 +80,7 @@ class StoreDiscussionTest extends TestCase
 
     public function test_it_creates_the_first_post()
     {
-        $channel = factory(Channel::class)->create();
+        $channel = Channel::factory()->create();
 
         $user = $this->generateUser();
 

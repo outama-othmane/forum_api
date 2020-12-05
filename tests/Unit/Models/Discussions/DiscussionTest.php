@@ -13,16 +13,16 @@ class DiscussionTest extends TestCase
 {
     public function test_it_belongs_to_discussion()
     {
-    	$discussion = factory(Discussion::class)->create();
+    	$discussion = Discussion::factory()->create();
 
     	$this->assertInstanceOf(Channel::class, $discussion->channel);
     }
 
     public function test_it_has_many_posts()
     {
-    	$discussion = factory(Discussion::class)->create();
+    	$discussion = Discussion::factory()->create();
 
-    	$posts = factory(Post::class, 2)->create([
+    	$posts = Post::factory(2)->create([
     		'discussion_id' => $discussion->id,
     	]);
 
@@ -31,14 +31,14 @@ class DiscussionTest extends TestCase
 
     public function test_it_has_last_post()
     {
-    	$discussion = factory(Discussion::class)->create();
+    	$discussion = Discussion::factory()->create();
     	
 
-    	$post = factory(Post::class, 5)->create([
+    	$post = Post::factory(5)->create([
     		'discussion_id' => $discussion->id,
     	]);
 
-    	$anotherPost = factory(Post::class)->create([
+    	$anotherPost = Post::factory()->create([
     		'discussion_id' => $discussion->id,
     		'created_at' => Carbon::now()->addYear(),
     	]);
@@ -58,7 +58,7 @@ class DiscussionTest extends TestCase
         $user = $this->generateUser();
         $this->actingAs($user);
 
-        $discussion = factory(Discussion::class)->create(['started_user_id' => $user->id]);
+        $discussion = Discussion::factory()->create(['started_user_id' => $user->id]);
 
         $this->assertTrue($discussion->canDelete());
     }
@@ -68,7 +68,7 @@ class DiscussionTest extends TestCase
         $user = $this->generateUser();
         $this->actingAs($user);
 
-        $discussion = factory(Discussion::class)->create(['started_user_id' => $user->id]);
+        $discussion = Discussion::factory()->create(['started_user_id' => $user->id]);
 
         $this->assertTrue($discussion->canEdit());
     }

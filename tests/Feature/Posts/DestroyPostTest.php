@@ -25,7 +25,7 @@ class DestroyPostTest extends TestCase
 
     public function test_it_fails_if_the_post_doesnt_exists()
     {
-        $discussion = factory(Discussion::class)->create();
+        $discussion = Discussion::factory()->create();
 
         $this->jsonAs($this->generateUser(), 'delete', '/api/discussions/'. $discussion->slug .'/posts/434')
             ->assertNotFound();
@@ -33,8 +33,8 @@ class DestroyPostTest extends TestCase
 
     public function test_it_fails_if_the_current_user_diff_than_the_owner()
     {
-        $discussion = factory(Discussion::class)->create();
-        $post = factory(Post::class)->create(['discussion_id' => $discussion->id]);
+        $discussion = Discussion::factory()->create();
+        $post = Post::factory()->create(['discussion_id' => $discussion->id]);
 
         $this->jsonAs($this->generateUser(), 'delete', '/api/discussions/'. $discussion->slug .'/posts/'.$post->id)
             ->assertForbidden();
@@ -44,11 +44,11 @@ class DestroyPostTest extends TestCase
     {
         $user = $this->generateUser();
         
-        $discussion = factory(Discussion::class)->create([
+        $discussion = Discussion::factory()->create([
             'closed_at' => Carbon::now()
         ]);
         
-        $post = factory(Post::class)->create([
+        $post = Post::factory()->create([
             'discussion_id' => $discussion->id, 
             'user_id' => $user->id
         ]);
@@ -61,9 +61,9 @@ class DestroyPostTest extends TestCase
     {
         $user = $this->generateUser();
         
-        $discussion = factory(Discussion::class)->create();
+        $discussion = Discussion::factory()->create();
         
-        $post = factory(Post::class)->create([
+        $post = Post::factory()->create([
             'discussion_id' => $discussion->id, 
             'user_id' => $user->id
         ]);

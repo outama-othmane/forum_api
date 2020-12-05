@@ -12,10 +12,10 @@ class IndexDiscussionTest extends TestCase
 {
     public function test_it_returns_a_collection_of_discussions()
     {
-        $discussions = factory(Discussion::class, 5)->create();
+        $discussions = Discussion::factory(5)->create();
 
         collect($discussions)->each(function ($discussion) {
-            $post = factory(Post::class)->create(['discussion_id' => $discussion->id]);
+            $post = Post::factory()->create(['discussion_id' => $discussion->id]);
         });
 
         collect($discussions)->each(function ($discussion) {
@@ -29,8 +29,8 @@ class IndexDiscussionTest extends TestCase
 
     public function test_it_has_a_specific_structure()
     {
-        $discussion = factory(Discussion::class)->create();
-        $post = factory(Post::class)->create(['discussion_id' => $discussion->id]);
+        $discussion = Discussion::factory()->create();
+        $post = Post::factory()->create(['discussion_id' => $discussion->id]);
 
         $this->json('get', '/api/discussions')
             ->assertJsonStructure([

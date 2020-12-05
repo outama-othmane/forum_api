@@ -19,7 +19,7 @@ class IndexUserPostsTest extends TestCase
     {
         $user = $this->generateUser();
         
-        $posts = factory(Post::class, 5)->create(['user_id' => $user->id]);
+        $posts = Post::factory(5)->create(['user_id' => $user->id]);
 
         collect($posts)->each(function ($post) use ($user) {
             $this->jsonAs($this->generateUser(), 'get', '/api/users/' . $user->username . '/posts')

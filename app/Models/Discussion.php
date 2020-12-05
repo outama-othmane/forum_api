@@ -6,15 +6,16 @@ use App\Models\Channel;
 use App\Models\Post;
 use App\Models\Traits\CanBeScopped;
 use App\Models\User;
-use App\Scoping\Scoper;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 
 class Discussion extends Model
 {
-    use CanBeScopped, SoftDeletes;
+    use HasFactory,
+        CanBeScopped, 
+        SoftDeletes;
     
     /**
      * The attributes that are mass assignable.

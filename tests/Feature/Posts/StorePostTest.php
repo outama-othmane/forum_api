@@ -26,7 +26,7 @@ class StorePostTest extends TestCase
 
     public function test_it_requires_content_field()
     {
-        $discussion = factory(Discussion::class)->create();
+        $discussion = Discussion::factory()->create();
 
         $this->jsonAs($this->generateUser(), 'post', "/api/discussions/{$discussion->slug}/posts")
             ->assertJsonValidationErrors(['content']);
@@ -34,7 +34,7 @@ class StorePostTest extends TestCase
 
     public function test_it_fails_if_the_parent_id_doesnt_exist()
     {
-        $discussion = factory(Discussion::class)->create();
+        $discussion = Discussion::factory()->create();
 
         $this->jsonAs($this->generateUser(), 'post', "/api/discussions/{$discussion->slug}/posts", ['parent_id' => 'n'])
             ->assertJsonValidationErrors(['parent_id']);
@@ -42,8 +42,8 @@ class StorePostTest extends TestCase
 
     public function test_it_fails_if_the_parent_id_doesnt_belong_to_the_discussion()
     {
-        $post = factory(Post::class)->create();
-        $discussion = factory(Discussion::class)->create();
+        $post = Post::factory()->create();
+        $discussion = Discussion::factory()->create();
 
         $this->jsonAs($this->generateUser(), 'post', "/api/discussions/{$discussion->slug}/posts", ['content' => 'my content', 'parent_id' => $post->id])
             ->assertJsonValidationErrors(['parent_id']);
@@ -51,8 +51,8 @@ class StorePostTest extends TestCase
 
     public function test_it_fails_if_the_parent_id_is_soft_deleted()
     {
-        $discussion = factory(Discussion::class)->create();
-        $post = factory(Post::class)->create(['discussion_id' => $discussion->id]);
+        $discussion = Discussion::factory()->create();
+        $post = Post::factory()->create(['discussion_id' => $discussion->id]);
         $post->delete();
 
         $this->jsonAs($this->generateUser(), 'post', "/api/discussions/{$discussion->slug}/posts", ['content' => 'my content', 'parent_id' => $post->id])
@@ -62,8 +62,8 @@ class StorePostTest extends TestCase
     public function test_it_creates_the_post()
     {
         $user = $this->generateUser();
-        $discussion = factory(Discussion::class)->create();
-        $post = factory(Post::class)->create(['discussion_id' => $discussion->id]);
+        $discussion = Discussion::factory()->create();
+        $post = Post::factory()->create(['discussion_id' => $discussion->id]);
 
         $this->jsonAs($user, 'post', "/api/discussions/{$discussion->slug}/posts", [
             'content' => $content = 'Yummy content here :)',

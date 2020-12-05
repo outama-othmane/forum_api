@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\Models\Channel;
 use App\Models\Discussion;
 use App\Models\Post;
@@ -19,19 +21,19 @@ class DiscussionsTableSeeder extends Seeder
     	$users = User::all();
     	$channels = Channel::all();
 
-        factory(Discussion::class, 100)->make()->each(function ($discussion) use($users, $channels) {
+        Discussion::factory(100)->make()->each(function ($discussion) use($users, $channels) {
         	
         	$discussion->channel_id = $channels->random()->id;
 
         	$discussion->save();
 
-            factory(Post::class, rand(1, 50))->make()->each(function ($post) use ($discussion, $users) {
+            Post::factory(rand(1, 50))->make()->each(function ($post) use ($discussion, $users) {
                 $post->user_id = $users->random()->id;
                 $post->discussion_id = $discussion->id;
 
                 $post->save();
 
-                factory(Vote::class, rand(1, 10))->make()->each(function ($vote) use($post, $users) {
+                Vote::factory(rand(1, 10))->make()->each(function ($vote) use($post, $users) {
 
                     $vote->user_id = $users->random()->id;
                     $vote->post_id = $post->id;

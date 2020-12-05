@@ -27,7 +27,7 @@ class DestroyDiscussionTest extends TestCase
     {
         $user = $this->generateUser();
 
-        $discussion = factory(Discussion::class)->create();
+        $discussion = Discussion::factory()->create();
         $this->jsonAs($user, 'delete', '/api/discussions/' . $discussion->slug)
             ->assertForbidden();
     }
@@ -36,7 +36,7 @@ class DestroyDiscussionTest extends TestCase
     {
         $user = $this->generateUser();
 
-        $discussion = factory(Discussion::class)->create(['started_user_id' => $user->id]);
+        $discussion = Discussion::factory()->create(['started_user_id' => $user->id]);
         $this->jsonAs($user, 'delete', '/api/discussions/' . $discussion->slug);
 
         $this->assertSoftDeleted('discussions', [

@@ -12,14 +12,14 @@ class VoteTest extends TestCase
 {
     public function test_it_belongs_to_a_user()
     {
-    	$vote = factory(Vote::class)->create();
+    	$vote = Vote::factory()->create();
 
     	$this->assertInstanceOf(User::class, $vote->user);
     }
 
     public function test_it_belongs_to_a_post()
     {
-    	$vote = factory(Vote::class)->create();
+    	$vote = Vote::factory()->create();
 
     	$this->assertInstanceOf(Post::class, $vote->post);
     }

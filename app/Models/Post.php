@@ -2,19 +2,20 @@
 
 namespace App\Models;
 
+use \Parsedown;
 use App\Models\Discussion;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Vote;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use \Parsedown;
 
 class Post extends Model
 {
-    use SoftDeletes;
+    use HasFactory,
+        SoftDeletes;
     
 	/**
      * The attributes that are mass assignable.

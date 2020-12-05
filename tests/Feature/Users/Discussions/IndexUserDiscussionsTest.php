@@ -19,7 +19,7 @@ class IndexUserDiscussionsTest extends TestCase
     {
         $user = $this->generateUser();
         
-        $discussions = factory(Discussion::class, 5)->create(['started_user_id' => $user->id]);
+        $discussions = Discussion::factory(5)->create(['started_user_id' => $user->id]);
 
         collect($discussions)->each(function ($discussion) use ($user) {
             $this->jsonAs($this->generateUser(), 'get', '/api/users/' . $user->username . '/discussions')

@@ -25,7 +25,7 @@ class StoreVoteTest extends TestCase
     public function test_it_stores_the_vote()
     {
         $user = $this->generateUser();
-        $post = factory(Post::class)->create();
+        $post = Post::factory()->create();
 
         $this->jsonAs($user, 'post', '/api/posts/'. $post->id .'/votes');
 
@@ -38,9 +38,9 @@ class StoreVoteTest extends TestCase
     public function test_it_stores_the_vote_one_time_only()
     {
         $user = $this->generateUser();
-        $post = factory(Post::class)->create();
+        $post = Post::factory()->create();
 
-        factory(Vote::class)->create($data = [
+        Vote::factory()->create($data = [
             'user_id' => $user->id,
             'post_id' => $post->id,
         ]);

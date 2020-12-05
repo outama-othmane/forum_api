@@ -1,15 +1,31 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Vote;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Vote::class, function (Faker $faker) {
-    return [
-        'post_id'	=> factory(Post::class)->create()->id,
-    	'user_id'	=> factory(User::class)->create()->id,
-    ];
-});
+class VoteFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Vote::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'post_id'	=> Post::factory()->create()->id,
+            'user_id'	=> User::factory()->create()->id,
+        ];
+    }
+}

@@ -1,16 +1,32 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
 use App\Models\Discussion;
 use App\Models\Post;
 use App\Models\User;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Post::class, function (Faker $faker) {
-    return [
-    	'discussion_id'	=> factory(Discussion::class)->create()->id,
-    	'user_id'	=> factory(User::class)->create()->id,
-        'content' => $faker->paragraph,
-    ];
-});
+class PostFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Post::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'discussion_id'	=> Discussion::factory()->create()->id,
+    	    'user_id'	=> User::factory()->create()->id,
+            'content' => $this->faker->paragraph,
+        ];
+    }
+}
