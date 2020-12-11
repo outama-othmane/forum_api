@@ -4,6 +4,8 @@
 Forum API is a delightfully simple discussion api for your website. It has been built using Laravel.
 
 ## Installation
+This steps are just for development/testing enviroment.
+If you want to deploy this application, then please read [Laravel's Deployment documentation](https://laravel.com/docs/deployment).
 
 ### 1. Clone the repository
 ```bash
@@ -33,6 +35,7 @@ php artisan migrate
 ```bash
 php artisan serve 
 ``` 
+You are going to use this server to link it with the **[forum_client](https://github.com/outama-othmane/forum_client)** frontend application.
 
 ## Available Routes
 Check the **routes/api.php** file.
