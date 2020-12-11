@@ -31,6 +31,20 @@ class LoginTest extends TestCase
         ])
             ->assertJsonValidationErrors(['email']);
     }
+    
+    public function test_it_can_log_in_using_username()
+    {
+        $user = User::factory()->create();
+
+        $this->json('post', '/api/auth/login', [
+            'email' => $user->username,
+            'password' => "password",
+        ])
+            ->assertOk()
+            ->assertJsonStructure([
+                'token'
+            ]);
+    }
 
     public function test_it_returns_a_token()
     {

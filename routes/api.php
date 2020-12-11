@@ -13,18 +13,50 @@ use App\Http\Controllers\Users\Posts\UserPostsController;
 use App\Http\Controllers\Users\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::post('auth/register', [RegisterController::class, 'register']);
-Route::post('auth/login', [LoginController::class, 'login']);
-Route::get('auth/me', [MeController::class, 'me']);
-Route::post('auth/logout', [LogoutController::class, 'logout']);
 
+/** 
+ * Authentification routes
+ * 
+ */
+Route::prefix('auth')->group(function() {
+    // Register
+    Route::post('register', [RegisterController::class, 'register']);
+
+    // Login
+    Route::post('login', [LoginController::class, 'login']);
+
+    // Me, to get user private information. Such as, email ...
+    Route::get('me', [MeController::class, 'me']);
+
+    // Logout
+    Route::post('logout', [LogoutController::class, 'logout']);
+});
+
+/** 
+ * Channels routes
+ * 
+ * Index: Show all the latest channels sorted. 
+ */
 Route::apiResource('channels', ChannelController::class);
 
+/** 
+ * Discussions routes
+ */
 Route::apiResource('discussions', DiscussionController::class);
+
+/** 
+ * Posts routes
+ */
 Route::apiResource('discussions/{discussion}/posts', DiscussionPostsController::class);
 
+/** 
+ * Votes routes
+ */
 Route::apiResource('posts/{post}/votes', PostVotesController::class);
 
+/** 
+ * Users routes
+ */
 Route::apiResource('users', UserController::class);
 Route::apiResource('users/{user}/discussions', UserDiscussionsController::class);
 Route::apiResource('users/{user}/posts', UserPostsController::class);

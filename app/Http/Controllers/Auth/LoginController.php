@@ -16,13 +16,15 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-    	$this->validator($request->only(['email', 'password']))->validate();
+    	$this->validator($request->only([$this->username(), 'password']))->validate();
 
-    	$user = User::firstWhere('email', $request->email);
+    	$user = User::firstWhere($this->getFieldType($request), $request->email);
 
     	if (!$user || !Hash::check($request->password, $user->password)) {
     		throw ValidationException::withMessages([
-	            'email' => [Lang::get('auth.failed')],
+	            $this->username() => [
+					Lang::get('auth.failed'),
+				],
 	        ]);
     	}
 
@@ -32,8 +34,21 @@ class LoginController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-    		'email' 	=> ['required', 'string', 'email'],
+    		'email' 	=> ['required', 'string'],
     		'password' 	=> ['required', 'string'],
     	]);
-    }
+	}
+	
+	protected function username()
+	{
+		return "email";
+	}
+
+	protected function getFieldType(Request $request)
+	{
+		if ( \filter_var($request->get($this->username()), FILTER_VALIDATE_EMAIL) === false )
+			return 'username';
+		
+		return 'email';
+	}
 }
