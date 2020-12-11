@@ -1,5 +1,4 @@
 # Forum API
-> This is the forum API. It has been built using Laravel.
 
 ## Introduction
 Forum API is a delightfully simple discussion api for your website. It has been built using Laravel.
