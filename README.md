@@ -7,6 +7,8 @@ Forum API is a delightfully simple discussion api for your website. It has been 
 This steps are just for development/testing enviroment.
 If you want to deploy this application, then please read [Laravel's Deployment documentation](https://laravel.com/docs/deployment).
 
+Before we star the installation, you make sure that **php** and **composer** are installed on your computer.
+
 ### 1. Clone the repository
 ```bash
 git clone https://github.com/outama-othmane/forum_api.git
