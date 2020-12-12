@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Discussion;
 use App\Models\Post;
 use App\Models\Vote;
+use App\Notifications\ResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -75,5 +76,16 @@ class User extends Authenticatable
     public function discussions()
     {
         return $this->hasMany(Discussion::class, 'started_user_id');
+    }
+
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPassword($token));
     }
 }

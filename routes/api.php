@@ -3,7 +3,9 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\MeController;
+use App\Http\Controllers\Auth\RecoverPasswordController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\ResetPasswordLinkController;
 use App\Http\Controllers\Channels\ChannelController;
 use App\Http\Controllers\Discussions\DiscussionController;
 use App\Http\Controllers\Discussions\Posts\DiscussionPostsController;
@@ -12,7 +14,6 @@ use App\Http\Controllers\Users\Discussions\UserDiscussionsController;
 use App\Http\Controllers\Users\Posts\UserPostsController;
 use App\Http\Controllers\Users\UserController;
 use Illuminate\Support\Facades\Route;
-
 
 /** 
  * Authentification routes
@@ -30,6 +31,12 @@ Route::prefix('auth')->group(function() {
 
     // Logout
     Route::post('logout', [LogoutController::class, 'logout']);
+
+    // Reset password link
+    Route::post('password/reset', ResetPasswordLinkController::class);
+
+    // Recover password link
+    Route::post('password/recover', RecoverPasswordController::class);
 });
 
 /** 
