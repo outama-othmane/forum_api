@@ -14,6 +14,11 @@ class LoginController extends Controller
 {
 	protected const DEVICE_NAME = 'web_api';
 
+	public function __construct()
+	{
+		$this->middleware("throttle:login");
+	}
+
     public function login(Request $request)
     {
     	$this->validator($request->only([$this->username(), 'password']))->validate();
