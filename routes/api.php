@@ -10,6 +10,7 @@ use App\Http\Controllers\Channels\ChannelController;
 use App\Http\Controllers\Discussions\DiscussionController;
 use App\Http\Controllers\Discussions\Posts\DiscussionPostsController;
 use App\Http\Controllers\Posts\Votes\PostVotesController;
+use App\Http\Controllers\Search\SearchController;
 use App\Http\Controllers\Users\Discussions\UserDiscussionsController;
 use App\Http\Controllers\Users\Posts\UserPostsController;
 use App\Http\Controllers\Users\UserController;
@@ -72,4 +73,4 @@ Route::apiResource('users/{user}/posts', UserPostsController::class);
 /**
  * Search route  
  */
-// Route::post('search', SearchController::class);
+Route::post('search', SearchController::class);

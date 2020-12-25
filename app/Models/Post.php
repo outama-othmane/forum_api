@@ -65,7 +65,7 @@ class Post extends Model
      *
      * @return App\Models\Vote collection
      */
-    public function lessVotes()
+    public function currentUserVotes()
     {
         if (!Auth::check()) {
             // We have to improve this :p
@@ -166,6 +166,6 @@ class Post extends Model
             return false;
         }
 
-        return $this->lessVotes->contains('user_id', '=', Auth::user()->id);
+        return $this->currentUserVotes->contains('user_id', '=', Auth::user()->id);
     }
 }

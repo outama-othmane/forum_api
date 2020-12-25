@@ -35,7 +35,7 @@ class PostTest extends TestCase
         $this->assertEquals(5, $post->votes->count());
     }
 
-    public function test_lessVotes_method()
+    public function test_currentUserVotes_method()
     {
         $post = Post::factory()->create();
 
@@ -51,7 +51,7 @@ class PostTest extends TestCase
             'user_id' => $user->id,
         ]);
 
-        $this->assertEquals(2, $post->lessVotes->count());
+        $this->assertEquals(2, $post->currentUserVotes->count());
     }
 
     public function test_it_has_many_children()

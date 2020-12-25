@@ -9,12 +9,15 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Scout\Searchable;
 
 class Discussion extends Model
 {
     use HasFactory,
-        CanBeScopped, 
+        CanBeScopped,
+        Searchable,
         SoftDeletes;
     
     /**
@@ -65,7 +68,7 @@ class Discussion extends Model
 
     public function getIsClosedAttribute()
     {
-        return !($this->closed_at === NULL);
+        return !is_null($this->closed_at);
     }
 
     public function scopeWithLastPostId($query)
@@ -107,5 +110,39 @@ class Discussion extends Model
         }
 
         return $this->started_user_id === Auth::user()->id;
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
+
+        return Arr::only($array, ['id', 'title']);
+    }
+
+    /**
+     * Modify the query used to retrieve models when making all of the models searchable.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    protected function makeAllSearchableUsing($query)
+    {
+        return $query->with(['channel']);
+    }
+
+    /**
+     * Determine if the model should be searchable.
+     *
+     * @return bool
+     */
+    public function shouldBeSearchable()
+    {
+        return true;
+        // return $this->isPublished();
     }
 }

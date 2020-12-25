@@ -19,8 +19,6 @@ class DiscussionPostsController extends Controller
 {
 	public function __construct()
 	{
-		// \Illuminate\Support\Facades\Auth::setUser(\App\Models\User::find(2));
-
         $this->middleware('auth:sanctum')->except(['index']);
 	}
 
@@ -28,7 +26,7 @@ class DiscussionPostsController extends Controller
     {
         // Get all the posts
     	$posts = $discussion->posts()
-            ->with(['user', 'lessVotes'])
+            ->with(['user', 'currentUserVotes'])
             ->withCount('votes')
             ->paginate(
                 min($request->get('perPage', 10), 10)

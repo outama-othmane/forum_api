@@ -6,12 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Discussions\{StoreDiscussionRequest, UpdateDiscussionRequest};
 use App\Http\Resources\Discussions\{DiscussionResource, ShowDiscussionResource};
 use App\Models\{Channel, Discussion};
-use App\Scoping\Scopes\{ChannelScope, ClosedScope};
 use App\Scoping\Scopes\Discussions\NoPostsYetScope;
 use App\Scoping\Scopes\Discussions\Ordering\{ActivityOrder, ChannelsOrder, LastPostDateOrder};
+use App\Scoping\Scopes\{ChannelScope, ClosedScope};
 use Illuminate\Http\Request;
-use Illuminate\Support\{Carbon, Str};
 use Illuminate\Support\Facades\{Auth,Lang};
+use Illuminate\Support\{Carbon, Str};
 
 class DiscussionController extends Controller
 {
@@ -23,7 +23,7 @@ class DiscussionController extends Controller
     public function index(Request $request)
     {	
         $discussions = Discussion::with(['channel', 'lastPost' => function($query) {
-                return $query->with(['user', 'lessVotes']);
+                return $query->with(['user', 'currentUserVotes']);
             }])
             ->withScopes($this->scopes())
         	->latest()
