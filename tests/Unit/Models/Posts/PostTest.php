@@ -81,4 +81,25 @@ class PostTest extends TestCase
 
         $this->assertTrue($post->canDelete());
     }
+
+    public function test_if_the_user_is_the_comments_author()
+    {
+        $user = $this->generateUser();
+        $this->actingAs($user);
+
+        $post = Post::factory()->create(['user_id' => $user->id]);
+
+        $this->assertTrue($post->isAuthor());
+    }
+
+    public function test_if_the_post_had_been_updated()
+    {
+        $post = Post::factory()->create();
+        $this->assertTrue($post->edited() === false);
+        
+        $post->content = "updated";
+        $post->updated_at = $post->updated_at->addSecond();
+        $post->save();
+        $this->assertTrue($post->edited());
+    }
 }

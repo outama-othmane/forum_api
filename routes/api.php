@@ -67,3 +67,9 @@ Route::apiResource('posts/{post}/votes', PostVotesController::class);
 Route::apiResource('users', UserController::class);
 Route::apiResource('users/{user}/discussions', UserDiscussionsController::class);
 Route::apiResource('users/{user}/posts', UserPostsController::class);
+
+
+/**
+ * Search route  
+ */
+// Route::post('search', SearchController::class);

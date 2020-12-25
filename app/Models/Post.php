@@ -116,7 +116,7 @@ class Post extends Model
         if (!Auth::check()) {
             return false;
         }
-        return Auth::user()->id === $this->user->id;
+        return Auth::user()->id === $this->user_id;
     }
 
     /*
@@ -129,7 +129,30 @@ class Post extends Model
         if (!Auth::check()) {
             return false;
         }
-        return $this->user->id === Auth::user()->id && $this->discussion->started_post_id !== $this->id;
+        return $this->user_id === Auth::user()->id && $this->discussion->started_post_id !== $this->id;
+    }
+
+    /*
+     * Check if the current user is the author of the post
+     *
+     * @return boolean
+     */
+    public function isAuthor()
+    {
+        if (!Auth::check()) {
+            return false;
+        }
+        return $this->user_id === Auth::user()->id;
+    }
+
+    /*
+     * Check if the post had been edited?
+     *
+     * @return boolean
+     */
+    public function edited()
+    {
+        return $this->created_at->notEqualTo($this->updated_at);
     }
 
     /*

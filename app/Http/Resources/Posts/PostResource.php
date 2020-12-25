@@ -21,7 +21,9 @@ class PostResource extends JsonResource
             'content_markdown'  => $this->content_markdown,
             'created_at'        => $this->created_at,
             'created_at_humans' => $this->created_at->diffForHumans(),
-            'isParent'          => $this->isParent,
+            'is_parent'         => $this->isParent,
+            'edited'            => $this->edited(),
+            'updated'           => $this->edited(),
             'parent_id'         => $this->parent_id,
             'votes_count'       => $this->votes_count,
             'author'            => $this->merge(
@@ -31,6 +33,7 @@ class PostResource extends JsonResource
                 'isLiked'   => $this->isLiked(),
                 'canEdit'   => $this->canEdit(),
                 'canDelete' => $this->canDelete(),
+                'isAuthor'  => $this->isAuthor(),
             ],
         ];
     }
